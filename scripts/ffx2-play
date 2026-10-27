@@ -1,0 +1,6 @@
+#!/bin/bash
+# "FINAL FANTASY X-2" library tile: ask ffx-launch to start FFX-2, then launch
+# the real Steam game (same Proton prefix, saves, achievements and overlay).
+mkdir -p "$HOME/.cache"
+echo ffx2 > "$HOME/.cache/ffx-launch-target"
+exec "$HOME/.local/share/Steam/steam.sh" steam://rungameid/359870

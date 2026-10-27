@@ -1,0 +1,14 @@
+#!/bin/bash
+# Steam launch-option wrapper for FFX/X-2 HD Remaster (app 359870):
+#   WINEDLLOVERRIDES=... ~/.local/bin/ffx-launch %command%
+# Starts FFX.exe instead of the FFX/X-2 launcher, or FFX-2.exe when the
+# "FINAL FANTASY X-2" library tile (ffx2-play) asked for it in the last minute.
+note=$HOME/.cache/ffx-launch-target
+target=FFX.exe
+if [ -f "$note" ]; then
+    if [ "$(cat "$note")" = ffx2 ] && [ $(( $(date +%s) - $(stat -c %Y "$note") )) -lt 60 ]; then
+        target=FFX-2.exe
+    fi
+    rm -f "$note"
+fi
+exec "${@/FFX&X-2_LAUNCHER.exe/$target}"
